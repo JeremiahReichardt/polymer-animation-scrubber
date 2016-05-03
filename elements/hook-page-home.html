@@ -1,0 +1,33 @@
+<dom-module id="hook-page-home">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+            :host.iron-selected {
+                display: block;
+            }
+        </style>
+        <div>HOME PAGE</div>
+    </template>
+    <script>
+        Polymer({
+            is: 'hook-page-home',
+            properties: {
+
+                active: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+                }
+            },
+            url: {
+                type: String,
+                computed: "getUrl(id)"
+            },
+            getUrl: function(id) {
+                return "#/home"
+            }
+        });
+    </script>
+</dom-module>

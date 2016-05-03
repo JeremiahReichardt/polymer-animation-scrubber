@@ -1,0 +1,32 @@
+<dom-module id="hook-page-story">
+    <template>
+        <style>
+            :host {
+                display: none;
+            }
+            :host.iron-selected {
+                display: block;
+            }
+        </style>
+        <div>STORY PAGE</div>
+    </template>
+    <script>
+        Polymer({
+            is: 'hook-page-story',
+            properties: {
+                active: {
+                    type: Boolean,
+                    value: false,
+                    reflectToAttribute: true
+                }
+            },
+            url: {
+                type: String,
+                computed: "getUrl(id)"
+            },
+            getUrl: function(id) {
+                return "#/story"
+            }
+        });
+    </script>
+</dom-module>

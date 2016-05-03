@@ -1,0 +1,56 @@
+<link rel="import" href="../bower_components/carbon-route/carbon-location.html">
+<link rel="import" href="../bower_components/carbon-route/carbon-route.html">
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="./hook-page-home.html">
+<link rel="import" href="./hook-page-media.html">
+<link rel="import" href="./hook-page-story.html">
+<dom-module id="hook-app">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+            a {
+                text-decoration: none;
+            }
+            .iron-selected {
+                text-decoration: underline;
+            }
+        </style>
+        <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
+        <carbon-route route="{{route}}"
+                      pattern="/:page"
+                      data="{{data}}"
+                      tail="{{tail}}"></carbon-route>
+        <nav>
+            <iron-selector selected="{{data.page}}" attr-for-selected="data-page">
+                <a data-page="home" href="#/home">home</a>
+                <a data-page="media" href="#/media">media</a>
+                <a data-page="story" href="#/story">story</a>
+            </iron-selector>
+        </nav>
+        <main>
+            <iron-selector selected="{{data.page}}" attr-for-selected="data-page">
+                <hook-page-home data-page="home"></hook-page-home>
+                <hook-page-media data-page="media"></hook-page-media>
+                <hook-page-story data-page="story"></hook-page-story>
+            </iron-selector>
+        </main>
+    </template>
+    <script>
+        Polymer({
+            is: 'hook-app',
+            observers: [
+                '_updateScroll(route)'
+            ],
+            attached: function() {
+                if (!this.route.path) {
+                    this.set('route.path', '/home');
+                }
+            },
+            _updateScroll: function() {
+                window.scroll(0, 0);
+            }
+        });
+    </script>
+</dom-module>
