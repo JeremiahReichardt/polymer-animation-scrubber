@@ -17,6 +17,7 @@
   "dependencies": {
     "polymer": "^1.4.0",
     "gsap": "^1.18.4",
-    "platform": "Polymer/platform#^0.4.2"
+    "platform": "Polymer/platform#^0.4.2",
+    "carbon-route": "PolymerElements/carbon-route#^0.8.4"
   }
 }
