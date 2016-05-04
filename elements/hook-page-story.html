@@ -1,30 +1,85 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<script src="../bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+
 <dom-module id="hook-page-story">
     <template>
         <style>
-            .hook-page-story {
-                width: 100%;
-                height: 0;
-                background-color: lightcyan;
+            #story-wrapper{
+                opacity: 0;
+                margin: 32px 64px;
+                margin-top: 42px;
+                padding: 64px;
+                -webkit-box-shadow: 0px 4px 13px -1px rgba(0,0,0,0.19);
+                -moz-box-shadow: 0px 4px 13px -1px rgba(0,0,0,0.19);
+                box-shadow: 0px 4px 13px -1px rgba(0,0,0,0.19);
+            }
+
+            #story-header {
+                opacity: 0;
                 text-align: center;
-                overflow: hidden;
+                font-size: 64px;
+                font-weight: bold;
+            }
+
+            #story-sub-header {
+                opacity: 0;
+                text-align: center;
+                font-size: 21px;
+                font-weight: bold;
+            }
+
+            #story-body {
+                opacity: 0;
+                font-size: 18px;
+                line-height: 1.6em;
+                text-align: left;
             }
         </style>
-        <div>HOME STORY</div>
+        <div id="story-wrapper">
+            <div id="story-header">story</div>
+            <div id="story-sub-header">sub header</div>
+            <div id="story-body">
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. In eu ipsum ac diam euismod consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec in scelerisque risus, sit amet sollicitudin dolor. Mauris molestie, felis vel vestibulum scelerisque, velit ipsum mollis elit, eu lacinia quam ligula non purus. Integer porttitor scelerisque magna sed commodo. Quisque viverra feugiat ex, at molestie magna varius quis. Nulla vel nunc neque. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras imperdiet imperdiet orci, malesuada rhoncus libero iaculis at. Vestibulum venenatis ut orci eget ornare. Integer in auctor risus, ac posuere nulla. Nulla semper tempor elit nec porttitor. Fusce mauris dolor, eleifend in sem id, molestie rutrum felis.
+                </p>
+                <p>
+                    Cras sit amet volutpat est. Nulla luctus, libero a tincidunt accumsan, nunc eros ultricies elit, a vulputate lorem dolor quis tortor. Etiam lobortis sem vitae velit egestas pulvinar. Curabitur molestie quis lorem ut aliquam. Nulla efficitur, quam eu auctor tempor, odio ante elementum leo, sit amet lacinia enim ex nec libero. Morbi egestas elit nec nunc gravida blandit. Suspendisse potenti. Nunc lectus felis, laoreet at sagittis sit amet, scelerisque sit amet enim. Pellentesque eget metus vitae metus volutpat gravida. Donec iaculis nibh dolor, semper varius magna tristique quis. Nullam facilisis tortor eget neque fermentum, sed rhoncus arcu molestie. Aliquam vulputate viverra luctus. Vivamus ut laoreet arcu. Nam et felis eget massa porta cursus. Nam sagittis id mi sed eleifend. Nunc sed euismod nibh, varius efficitur lacus.
+                </p>
+                <p>
+                    Etiam pulvinar elit eget commodo condimentum. Duis mi ligula, tincidunt vitae mi in, ultrices rutrum lacus. Phasellus est nunc, iaculis id feugiat porta, pellentesque quis arcu. Proin pharetra pharetra odio quis tempor. Fusce dignissim eleifend urna id venenatis. Sed sit amet magna orci. Curabitur laoreet, risus eget tincidunt efficitur, velit justo volutpat augue, quis gravida nulla odio ac nibh. Fusce varius dui vitae felis volutpat accumsan. Sed sodales eget erat eget sagittis. Mauris volutpat consectetur tortor, nec finibus ligula tempor eget. Donec dictum orci in felis vestibulum, eu interdum nisi condimentum. Vivamus ullamcorper, nisl sed molestie placerat, nulla nisi consectetur tellus, nec commodo risus nulla sit amet magna. Nulla euismod, libero et condimentum efficitur, massa lorem facilisis risus, vel interdum eros ligula eget sem. Nulla convallis erat non blandit vehicula. Morbi id nunc ac mauris sodales tempus id quis nisi. Nullam augue tortor, mollis vitae tristique sed, tincidunt sed ante.
+                </p>
+            </div>
+        </div>
     </template>
     <script>
         Polymer({
             is: 'hook-page-story',
             TimelineMax: new TimelineMax(),
+            attached: function() {
+                this.show();
+            },
             show: function() {
                 this.TimelineMax.stop();
                 this.TimelineMax = new TimelineMax();
-                this.TimelineMax.add( new TweenLite.to( '.hook-page-story', 0.50, {height:'100%'})).play();
+                this.TimelineMax.add( new TweenLite.to( '#story-wrapper', .20, {opacity:1}), 0);
+                this.TimelineMax.add( new TweenLite.to( '#story-wrapper', .525, {opacity:1, marginTop:'32px'}), 0);
+                this.TimelineMax.add( new TweenLite.to( '#story-header', .20, {opacity:1}), 0.05);
+                this.TimelineMax.add( new TweenLite.to( '#story-sub-header', .25, {opacity:1}), 0.15);
+                this.TimelineMax.add( new TweenLite.to( '#story-body', .45, {opacity:1}), 0.25);
+                this.TimelineMax.play();
             },
             hide: function(cb) {
                 this.TimelineMax.stop();
-                this.TimelineMax = new TimelineMax();
-                this.TimelineMax.add( new TweenLite.to( '.hook-page-story', 0.50, {height:'0', onComplete:cb})).play();
+                this.TimelineMax = new TimelineMax({onComplete:cb});
+                this.TimelineMax.add( new TweenLite.to( '#story-wrapper', .20, {opacity:0}), 0);
+                this.TimelineMax.add( new TweenLite.to( '#story-wrapper', .525, {opacity:0, marginTop:'42px'}), 0);
+                this.TimelineMax.add( new TweenLite.to( '#story-header', .20, {opacity:0}), 0.05);
+                this.TimelineMax.add( new TweenLite.to( '#story-sub-header', .25, {opacity:0}), 0.15);
+                this.TimelineMax.add( new TweenLite.to( '#story-body', .45, {opacity:0}), 0.25);
+                this.TimelineMax.play();
             }
         });
     </script>
 </dom-module>
+
+<hook-page-story></hook-page-story>
