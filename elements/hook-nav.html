@@ -1,0 +1,42 @@
+<link rel="import" href="../bower_components/iron-selector/iron-selector.html">
+
+<dom-module id="hook-nav">
+    <template>
+        <style>
+            nav {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0;
+                bottom: 0;
+                background-color: darkgray;
+                overflow: hidden;
+            }
+        </style>
+        <nav>
+            <iron-selector selected="{{data.page}}" attr-for-selected="data-page">
+                <ul>
+                    <li><a data-page="home" href="#/home">home</a></li>
+                    <li><a data-page="media" href="#/media">media</a></li>
+                    <li><a data-page="story" href="#/story">story</a></li>
+                </ul>
+            </iron-selector>
+        </nav>
+    </template>
+    <script>
+        Polymer({
+            is: 'hook-nav',
+            TimelineMax: new TimelineMax(),
+            show: function(cb) {
+                this.TimelineMax.stop();
+                this.TimelineMax = new TimelineMax();
+                this.TimelineMax.add( new TweenLite.to( 'nav', 0.50, {width:'200px', onComplete:cb})).play();
+            },
+            hide: function(cb) {
+                this.TimelineMax.stop();
+                this.TimelineMax = new TimelineMax();
+                this.TimelineMax.add( new TweenLite.to( 'nav', 0.50, {width:'0', onComplete:cb})).play();
+            }
+        });
+    </script>
+</dom-module>

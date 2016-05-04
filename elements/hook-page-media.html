@@ -1,31 +1,29 @@
 <dom-module id="hook-page-media">
     <template>
         <style>
-            :host {
-                display: none;
-            }
-            :host.iron-selected {
-                display: block;
+            .hook-page-media {
+                width: 100%;
+                height: 0;
+                background-color: lightgrey;
+                text-align: center;
+                overflow: hidden;
             }
         </style>
-        <div>MEDIA PAGE</div>
+        <div>HOME MEDIA</div>
     </template>
     <script>
         Polymer({
             is: 'hook-page-media',
-            properties: {
-                active: {
-                    type: Boolean,
-                    value: false,
-                    reflectToAttribute: true
-                }
+            TimelineMax: new TimelineMax(),
+            show: function() {
+                this.TimelineMax.stop();
+                this.TimelineMax = new TimelineMax();
+                this.TimelineMax.add( new TweenLite.to( '.hook-page-media', 0.50, {height:'100%'})).play();
             },
-            url: {
-                type: String,
-                computed: "getUrl(id)"
-            },
-            getUrl: function(id) {
-                return "#/media"
+            hide: function(cb) {
+                this.TimelineMax.stop();
+                this.TimelineMax = new TimelineMax();
+                this.TimelineMax.add( new TweenLite.to( '.hook-page-media', 0.50, {height:'0', onComplete:cb})).play();
             }
         });
     </script>
