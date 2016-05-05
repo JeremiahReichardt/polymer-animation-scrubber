@@ -11,16 +11,18 @@
         <style></style>
         <carbon-location route="{{route}}" use-hash-as-path></carbon-location>
         <carbon-route route="{{route}}" pattern="/:page" data="{{data}}" tail="{{tail}}"></carbon-route>
-        <carbon-route-converter on-path-changed="onPathChanged" route="{{route}}"></carbon-route-converter>
         <hook-nav></hook-nav>
         <main></main>
     </template>
     <script>
         Polymer({
             is: 'hook-app',
-            onPathChanged: function( event ) {
-                if (event.detail.value.length !== 0) {
-                    switch( event.detail.value ) {
+            observers: [
+                '_onRouteChange(route)'
+            ],
+            _onRouteChange: function(route) {
+                if (route.path.length !== 0) {
+                    switch( route.path ) {
                         case '/home':
                             this.nextPageTageName = 'hook-page-home';
                             break;
