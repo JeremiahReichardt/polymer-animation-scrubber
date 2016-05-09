@@ -79,11 +79,9 @@
                 this.TimelineMax.play();
             },
             hide: function(cb) {
-
-                console.log( cb );
-
                 this.TimelineMax.stop();
                 this.TimelineMax = new TimelineMax({onComplete:cb});
+                this.TimelineMax.name = 'child';
                 this.TimelineMax.add( new TweenLite.to( '#media-overlay', .20, {height:'100%'}), 1);
                 this.TimelineMax.play();
             }

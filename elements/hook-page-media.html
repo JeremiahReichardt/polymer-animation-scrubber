@@ -50,12 +50,19 @@
             hide: function(cb) {
                 this.TimelineMax.stop();
                 this.TimelineMax = new TimelineMax({onComplete:cb});
+                this.TimelineMax.name = 'parent';
                 this.TimelineMax.add( new TweenLite.to( '#media-wrapper', .20, {opacity:0}), 0);
                 this.TimelineMax.add( new TweenLite.to( '#media-wrapper', .525, {opacity:0, marginTop:'42px'}), 0);
                 this.TimelineMax.add( new TweenLite.to( '#media-header', .20, {opacity:0}), 0.05);
                 this.TimelineMax.add( new TweenLite.to( '#media-sub-header', .25, {opacity:0}), 0.15);
                 this.TimelineMax.add( new TweenLite.to( '#media-body', .45, {opacity:0}), 0.25);
-                this.$$('hook-video-panel').hide(this.TimelineMax.play);
+
+                var _this = this.TimelineMax;
+
+                this.$$('hook-video-panel').hide(function() {
+                    _this.play()
+                });
+
                 this.TimelineMax.stop();
             }
         });
