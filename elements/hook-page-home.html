@@ -1,5 +1,6 @@
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <script src="../bower_components/gsap/src/uncompressed/TweenMax.js"></script>
+<link rel="import" href="./control-panel.html">
 
 <dom-module id="hook-page-home">
     <template>
@@ -35,6 +36,7 @@
                 text-align: left;
             }
         </style>
+        <control-panel timeline="{{TimelineMax}}"></control-panel>
         <div id="home-wrapper">
             <div id="home-header">HOME</div>
             <div id="home-sub-header">sub header</div>
@@ -59,8 +61,12 @@
                 this.show();
             },
             show: function() {
-                this.TimelineMax.stop();
-                this.TimelineMax = new TimelineMax();
+                this.TimelineMax = new TimelineMax({onUpdateScope: this, onUpdate: this._updateControl});
+                //this.TimelineMax.stop();
+                //this.TimelineMax = new TimelineMax();
+                this.TimelineMax.name = "home page tween";
+                this.notifyPath('TimelineMax.name', this.TimelineMax.name);
+
                 this.TimelineMax.add( new TweenLite.to( '#home-wrapper', .20, {opacity:1}), 0);
                 this.TimelineMax.add( new TweenLite.to( '#home-wrapper', .525, {opacity:1, marginTop:'32px'}), 0);
                 this.TimelineMax.add( new TweenLite.to( '#home-header', .20, {opacity:1}), 0.05);
@@ -69,15 +75,24 @@
                 this.TimelineMax.play();
             },
             hide: function(cb) {
-                this.TimelineMax.stop();
-                this.TimelineMax = new TimelineMax({onComplete:cb});
+                this.TimelineMax = new TimelineMax({onUpdateScope: this, onUpdate: this._updateControl, onComplete:cb});
+                //this.timelineMax.stop();
+                //this.TimelineMax = new TimelineMax({onComplete: cb});
+                this.TimelineMax.name = "home page tween";
+                this.notifyPath('TimelineMax.name', this.TimelineMax.name);
+
+
                 this.TimelineMax.add( new TweenLite.to( '#home-wrapper', .20, {opacity:0}), 0);
                 this.TimelineMax.add( new TweenLite.to( '#home-wrapper', .525, {opacity:0, marginTop:'42px'}), 0);
                 this.TimelineMax.add( new TweenLite.to( '#home-header', .20, {opacity:0}), 0.05);
                 this.TimelineMax.add( new TweenLite.to( '#home-sub-header', .25, {opacity:0}), 0.15);
                 this.TimelineMax.add( new TweenLite.to( '#home-body', .45, {opacity:0}), 0.25);
                 this.TimelineMax.play();
-            }
+            },
+            _updateControl: function() {
+              var percentComplete = Math.round(100 * (this.TimelineMax.time() / this.TimelineMax.duration()));
+              this.notifyPath('TimelineMax.progress', percentComplete);
+            }, 
         });
     </script>
 </dom-module>
