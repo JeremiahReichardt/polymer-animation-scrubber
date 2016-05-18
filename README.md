@@ -6,6 +6,8 @@ This custom polymer element (`<tween-controller>`) allows you to control another
 
 ###To demo
 
+`bower install`
+
 ####Mac
 Open in Brackets or run `python -m SimpleHTTPServer` in the directory above this repo, open localhost:8000 in your browser and select the tween-controller folder.
 
